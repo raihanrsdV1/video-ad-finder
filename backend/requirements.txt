@@ -1,0 +1,6 @@
+Django
+djangorestframework
+ffmpeg-python
+numpy
+opencv-python
+audio-offset-finder
