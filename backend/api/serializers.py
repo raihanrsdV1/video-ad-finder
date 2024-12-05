@@ -4,4 +4,4 @@ from .models import VideoComparison
 class VideoComparisonSerializer(serializers.ModelSerializer):
     class Meta:
         model = VideoComparison
-        fields = '__all__'
+        fields = ['video1', 'video2', 'video1_name', 'video2_name']

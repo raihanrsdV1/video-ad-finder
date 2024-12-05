@@ -8,14 +8,25 @@ function UploadForm() {
     const formData = new FormData();
     formData.append("video1", e.target.video1.files[0]);
     formData.append("video2", e.target.video2.files[0]);
+    formData.append("video1_name", e.target.video1_name.value);
+    formData.append("video2_name", e.target.video2_name.value);
 
-    const response = await fetch("http://localhost:8000/api/compare", {
-      method: "POST",
-      body: formData,
-    });
-
-    const result = await response.json();
-    setComparisonResult(result);
+    try {
+      const response = await fetch('http://localhost:8000/api/compare/', {
+        method: 'POST',
+        body: formData,
+      });
+    
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+    
+      // Assuming the backend returns JSON
+      const data = await response.json();
+      console.log('Response data:', data);
+    } catch (error) {
+      console.error('Error during fetch:', error);
+    }
   };
 
   return (
@@ -24,7 +35,17 @@ function UploadForm() {
         <h1 className="text-2xl font-semibold text-gray-800 mb-4">Video Comparison</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-gray-700">Video 1:</label>
+            <label className="block text-gray-700">Video 1 Name:</label>
+            <input
+              type="text"
+              name="video1_name"
+              className="w-full border border-gray-300 rounded-lg p-2"
+              placeholder="Enter name for Video 1"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700">Video 1 File:</label>
             <input
               type="file"
               name="video1"
@@ -33,7 +54,17 @@ function UploadForm() {
             />
           </div>
           <div>
-            <label className="block text-gray-700">Video 2:</label>
+            <label className="block text-gray-700">Ad Video Name:</label>
+            <input
+              type="text"
+              name="video2_name"
+              className="w-full border border-gray-300 rounded-lg p-2"
+              placeholder="Enter name for Ad Video"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700">Ad Video File:</label>
             <input
               type="file"
               name="video2"
